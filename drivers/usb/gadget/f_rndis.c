@@ -581,7 +581,7 @@ static void rndis_command_complete(struct usb_ep *ep, struct usb_request *req)
 			 * together too quickly. However, module param
 			 * is not honored.
 			 */
-			rndis->port.dl_max_pkts_per_xfer = 5;
+			rndis->port.dl_max_pkts_per_xfer = 3;
 
 			gether_update_dl_max_pkts_per_xfer(&rndis->port,
 					 rndis->port.dl_max_pkts_per_xfer);
