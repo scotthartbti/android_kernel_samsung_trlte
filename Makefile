@@ -326,6 +326,8 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
+CC		= $(CROSS_COMPILE)gcc
+CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
 STRIP		= $(CROSS_COMPILE)strip
@@ -369,16 +371,6 @@ CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 # limitations under the License.
 #
 
-# Handle kernel CC flags by importing vendor/sm strings
-ifdef SM_KERNEL_NAME
-  USE_GCC = $(CROSS_COMPILE_NAME)gcc-$(SM_KERNEL_NAME)
-  CC = $(USE_GCC)
-else
-  CC = $(CROSS_COMPILE)gcc
-endif
-
-CPP = $(CC) -E
-
 # Highest level of basic gcc optimizations if enabled
 ifeq ($(strip $(LOCAL_O3)),true)
   SABERMOD_KERNEL_FLAGS	:= -O3
@@ -414,7 +406,7 @@ else
 endif
 
 # Strict aliasing for hammerhead if enabled
-ifdef CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING
+ifdef CONFIG_ARCH_APQ8084_TRLTE_STRICT_ALIASING
   ifdef SABERMOD_KERNEL_FLAGS
     SABERMOD_KERNEL_FLAGS += $(KERNEL_STRICT_FLAGS)
   else
