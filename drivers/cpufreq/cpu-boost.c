@@ -252,13 +252,6 @@ static void run_boost_migration(unsigned int cpu)
 	s->pending = false;
 	src_cpu = s->src_cpu;
 	spin_unlock_irqrestore(&s->lock, flags);
-#ifdef CONFIG_IRLED_GPIO
-		if (unlikely(gir_boost_disable)) {
-			pr_debug("[GPIO_IR][%s] continue~!(cpu:%d)\n", 
-				__func__, raw_smp_processor_id());
-			continue;
-		}
-#endif
 
 	ret = cpufreq_get_policy(&src_policy, src_cpu);
 	if (ret)
