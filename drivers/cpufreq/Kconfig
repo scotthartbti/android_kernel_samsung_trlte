@@ -125,6 +125,12 @@ config CPU_FREQ_DEFAULT_GOV_INTELLIDEMAND
 	select CPU_FREQ_GOV_INTELLIDEMAND
 	help
 
+config CPU_FREQ_DEFAULT_GOV_ZZMOOVE
+	bool "zzmoove"
+	select CPU_FREQ_GOV_ZZMOOVE
+	help
+	Use the CPUFreq governor 'zzmoove' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -205,6 +211,10 @@ config CPU_FREQ_GOV_INTELLIDEMAND
 
 config CPU_FREQ_GOV_INTELLIACTIVE
 	tristate "'intelliactive' cpufreq policy governor"
+	depends on CPU_FREQ
+
+config CPU_FREQ_GOV_ZZMOOVE
+	tristate "'zzmoove' cpufreq governor"
 	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_CONSERVATIVE
