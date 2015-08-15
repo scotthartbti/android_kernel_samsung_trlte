@@ -85,3 +85,4 @@ obj-$(CONFIG_INPUT_WACOM) += wacom/
 obj-$(CONFIG_TOUCHSCREEN_STM)		+= stm/
 obj-$(CONFIG_STATE_NOTIFIER)		+= state_notifier.o
 obj-y += touchboost.o
+obj-$(CONFIG_WAKE_GESTURES)		+= wake_gestures.o
