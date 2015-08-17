@@ -157,5 +157,9 @@ obj-$(CONFIG_INTELLI_HOTPLUG) += intelli_hotplug.o
 obj-$(CONFIG_BRICKED_HOTPLUG) += bricked_hotplug.o
 obj-$(CONFIG_ALUCARD_HOTPLUG) += alucard_hotplug.o
 obj-$(CONFIG_MMI_UNIT_INFO) += mmi-unit-info.o
+<<<<<<< HEAD
 
 >>>>>>> bc4f2b6... arm: msm: mmi: export unit info to Modem over SMEM
+=======
+obj-$(CONFIG_MMI_SOC_INFO) += mmi_soc_info.o
+>>>>>>> 3c7e6b1... msm: mmi: export pvs bin info
