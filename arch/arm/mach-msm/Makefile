@@ -151,3 +151,11 @@ obj-$(CONFIG_SEC_THERMISTOR) += sec_thermistor.o apq8084-thermistor.o
 obj-$(CONFIG_BT_BCM4358) += board-bluetooth-bcm4358.o
 obj-$(CONFIG_GSM_MODEM_SPRD6500) += board-sprd6500-spi.o board-sprd6500-modems.o
 obj-$(CONFIG_FORCE_FAST_CHARGE) += fastchg.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_INTELLI_HOTPLUG) += intelli_hotplug.o
+obj-$(CONFIG_BRICKED_HOTPLUG) += bricked_hotplug.o
+obj-$(CONFIG_ALUCARD_HOTPLUG) += alucard_hotplug.o
+obj-$(CONFIG_MMI_UNIT_INFO) += mmi-unit-info.o
+
+>>>>>>> bc4f2b6... arm: msm: mmi: export unit info to Modem over SMEM
