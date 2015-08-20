@@ -114,6 +114,25 @@ MODULE_ALIAS("ext3");
 #define IS_EXT3_SB(sb) (0)
 #endif
 
+/*
+ * Use get_random_int() to implement AT_RANDOM while avoiding depletion
+ * of the entropy pool.
+ */
+static void get_atrandom_bytes(unsigned char *buf, size_t nbytes)
+{
+	unsigned char *p = buf;
+
+	while (nbytes) {
+		unsigned int random_variable;
+		size_t chunk = min(nbytes, sizeof(random_variable));
+
+		random_variable = get_random_int();
+		memcpy(p, &random_variable, chunk);
+		p += chunk;
+		nbytes -= chunk;
+	}
+}
+
 static int ext4_verify_csum_type(struct super_block *sb,
 				 struct ext4_super_block *es)
 {
@@ -3023,7 +3042,7 @@ static struct ext4_li_request *ext4_li_request_new(struct super_block *sb,
 	 * spread the inode table initialization requests
 	 * better.
 	 */
-	get_random_bytes(&rnd, sizeof(rnd));
+	get_atrandom_bytes((char *)&rnd, (size_t)sizeof(rnd));
 	elr->lr_next_sched = jiffies + (unsigned long)rnd %
 			     (EXT4_DEF_LI_MAX_START_DELAY * HZ);
 
@@ -3810,7 +3829,7 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 		}
 
 	sbi->s_gdb_count = db_count;
-	get_random_bytes(&sbi->s_next_generation, sizeof(u32));
+	get_atrandom_bytes((char *)&sbi->s_next_generation, sizeof(u32));
 	spin_lock_init(&sbi->s_next_gen_lock);
 
 	init_timer(&sbi->s_err_report);

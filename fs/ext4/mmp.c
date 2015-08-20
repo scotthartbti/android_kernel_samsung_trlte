@@ -6,6 +6,25 @@
 
 #include "ext4.h"
 
+/*
+ * Use get_random_int() to implement AT_RANDOM while avoiding depletion
+ * of the entropy pool.
+ */
+static void get_atrandom_bytes(unsigned char *buf, size_t nbytes)
+{
+	unsigned char *p = buf;
+
+	while (nbytes) {
+		unsigned int random_variable;
+		size_t chunk = min(nbytes, sizeof(random_variable));
+
+		random_variable = get_random_int();
+		memcpy(p, &random_variable, chunk);
+		p += chunk;
+		nbytes -= chunk;
+	}
+}
+
 /* Checksumming functions */
 static __le32 ext4_mmp_csum(struct super_block *sb, struct mmp_struct *mmp)
 {
@@ -259,7 +278,7 @@ static unsigned int mmp_new_seq(void)
 	u32 new_seq;
 
 	do {
-		get_random_bytes(&new_seq, sizeof(u32));
+		get_atrandom_bytes((char *)&new_seq, (size_t)sizeof(u32));
 	} while (new_seq > EXT4_MMP_SEQ_MAX);
 
 	return new_seq;
