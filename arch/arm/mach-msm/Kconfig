@@ -941,12 +941,6 @@ config MSM_RPC_LOOPBACK_XPRT
 
 if CPU_FREQ_MSM
 
-config ALUCARD_HOTPLUG
-	bool "Enable alucard-hotplug cpu hotplug driver"
-	default y
-	help
-	  Generic Alucard-hotplug cpu hotplug driver for ARM SOCs
-
 config MSM_CPU_FREQ_SET_MIN_MAX
 	bool "Set Min/Max CPU frequencies."
 	default n
@@ -1835,6 +1829,14 @@ config SEC_THERMISTOR
 config SAMSUNG_PRODUCT_SHIP
         bool "set up for product shipping"
         default n
+
+config MSM_HOTPLUG
+	bool "MSM hotplug driver"
+	depends on HOTPLUG_CPU
+	default y
+	help
+	  The MSM hotplug driver controls on-/offlining of additional cores based
+	  on current cpu load.
 
 config BRICKED_HOTPLUG
 	bool "Enable kernel based mpdecision"
