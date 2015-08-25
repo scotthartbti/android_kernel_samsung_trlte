@@ -776,8 +776,7 @@ static int max77823_chg_set_property(struct power_supply *psy,
 		charger->siop_level = val->intval;
 		if (charger->is_charging) {
 			/* decrease the charging current according to siop level */
-			int current_now =
-				charger->charging_current * val->intval / 100;
+			int current_now = charger->charging_current * val->intval / 100;
 
 			/* do forced set charging current */
 			if (current_now > 0 &&
