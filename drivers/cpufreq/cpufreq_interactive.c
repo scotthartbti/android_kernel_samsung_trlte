@@ -130,7 +130,7 @@ static bool io_is_busy = true;
  */
 static unsigned long max_freq_hysteresis = 100000;
 
-#define DOWN_LOW_LOAD_THRESHOLD 5
+#define DOWN_LOW_LOAD_THRESHOLD 10
 
 /* Round to starting jiffy of next evaluation window */
 static u64 round_to_nw_start(u64 jif)

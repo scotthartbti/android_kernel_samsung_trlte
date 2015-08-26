@@ -25,7 +25,7 @@
 #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(20000)
 #define BOOST_DURATION_US			(40000)
 #define BOOST_FREQ_VAL				(1497600)
-#define DEFAULT_MIN_LOAD			(5)
+#define DEFAULT_MIN_LOAD			(10)
 
 static DEFINE_PER_CPU(struct cs_cpu_dbs_info_s, cs_cpu_dbs_info);
 
