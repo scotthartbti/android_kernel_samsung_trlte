@@ -8,8 +8,8 @@
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
  */
+#include <linux/dcache.h>
 #include <linux/fs.h>
-#include <linux/namei.h>
 #include <linux/f2fs_fs.h>
 #include "f2fs.h"
 #include "node.h"
@@ -135,9 +135,8 @@ struct f2fs_dir_entry *find_target_dentry(struct f2fs_filename *fname,
 				goto found;
 		} else if (de_name.len == name->len &&
 			de->hash_code == namehash &&
-			!memcmp(de_name.name, name->name, name->len)) {
+			!memcmp(de_name.name, name->name, name->len))
 			goto found;
-		}
 
 		if (max_slots && max_len > *max_slots)
 			*max_slots = max_len;
@@ -192,7 +191,7 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
 		}
 
 		de = find_in_block(dentry_page, fname, namehash, &max_slots,
-							res_page);
+								res_page);
 		if (de)
 			break;
 
@@ -215,8 +214,8 @@ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
  * and the entry itself. Page is returned mapped and unlocked.
  * Entry is guaranteed to be valid.
  */
-struct f2fs_dir_entry *f2fs_find_entry(struct inode *dir, struct qstr *child,
-		struct page **res_page)
+struct f2fs_dir_entry *f2fs_find_entry(struct inode *dir,
+			struct qstr *child, struct page **res_page)
 {
 	unsigned long npages = dir_blocks(dir);
 	struct f2fs_dir_entry *de = NULL;
@@ -720,8 +719,8 @@ void f2fs_delete_entry(struct f2fs_dir_entry *dentry, struct page *page,
 	if (inode)
 		f2fs_drop_nlink(dir, inode, NULL);
 
-	if (bit_pos == NR_DENTRY_IN_BLOCK) {
-		truncate_hole(dir, page->index, page->index + 1);
+	if (bit_pos == NR_DENTRY_IN_BLOCK &&
+			!truncate_hole(dir, page->index, page->index + 1)) {
 		clear_page_dirty_for_io(page);
 		ClearPagePrivate(page);
 		ClearPageUptodate(page);
