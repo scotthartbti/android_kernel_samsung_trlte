@@ -42,7 +42,7 @@ static int f2fs_vm_page_mkwrite(struct vm_area_struct *vma,
 
 	f2fs_balance_fs(sbi);
 
-	vfs_check_frozen(inode->i_sb, SB_FREEZE_WRITE);
+	sb_start_pagefault(inode->i_sb);
 
 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
 
@@ -88,6 +88,7 @@ mapped:
 	f2fs_wait_on_page_writeback(page, DATA);
 	/* if gced page is attached, don't write to cold segment */
 	clear_cold_data(page);
+	sb_end_pagefault(inode->i_sb);
 out:
 	return block_page_mkwrite_return(err);
 }
@@ -415,7 +416,7 @@ static loff_t f2fs_llseek(struct file *file, loff_t offset, int whence)
 	case SEEK_CUR:
 	case SEEK_END:
 		return generic_file_llseek_size(file, offset, whence,
-						maxbytes);
+						maxbytes, i_size_read(inode));
 	case SEEK_DATA:
 	case SEEK_HOLE:
 		if (offset < 0)
